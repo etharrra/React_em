@@ -1,4 +1,5 @@
 import React from 'react';
+import Toolbar from './Toolbar';
 
 class Item extends React.Component {
 	render() {
@@ -11,6 +12,28 @@ class Item extends React.Component {
 	}
 }
 
+class AddForm extends React.Component {
+	nameRef = React.createRef();
+	priceRef = React.createRef();
+
+	add = () => {
+		let name = this.nameRef.current.value;
+		let price = this.priceRef.current.value;
+
+		this.props.add(name, price);
+	}
+
+	render() {
+		return (
+			<div>
+				<input type="text" ref={this.nameRef} /><br/>
+				<input type="text" ref={this.priceRef} /><br/>
+				<button onClick={this.add}>Add</button>
+			</div>
+		)
+	}
+}
+
 class App extends React.Component {
 	state = {
 		items: [
@@ -19,13 +42,8 @@ class App extends React.Component {
 		]
 	}
 
-	nameRef = React.createRef();
- 	priceRef = React.createRef();
-
-	add = () => {
+	add = (name, price) => {
 		let id = this.state.items.length + 1;
-		let name = this.nameRef.current.value;
-		let price = this.priceRef.current.value;
 
 		this.setState({
 			items: [
@@ -38,6 +56,10 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
+				<Toolbar>
+					<h1>Hello React</h1>
+					<h2>Component composition</h2>
+				</Toolbar>
 				<h1>Hello React</h1>
 				<ul>
 					{this.state.items.map(i => {
@@ -50,11 +72,7 @@ class App extends React.Component {
 						);
 					})}
 				</ul>
-
-				<input type="text" ref={this.nameRef} /> <br/>
-				<input type="text" ref={this.priceRef} /> <br/>
-
-				<button onClick={this.add} >Add</button>
+				<AddForm add={this.add} />
 			</div>
 		);
 	}
