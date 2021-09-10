@@ -1,5 +1,6 @@
 import React, {createRef, useState} from 'react';
 import Toolbar from './Toolbar';
+import MyContext from './MyContext';
 
 // class Item extends React.Component {
 // 	render() {
@@ -125,6 +126,7 @@ const App = props => {
 
 	return (
 		<div>
+			<MyContext />
 			<ul>
 				{items.map(i => <Item name={i.name} price={i.price} key={i.id} />)}
 			</ul>
