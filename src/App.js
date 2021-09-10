@@ -40,38 +40,27 @@ const Item = ({name, price}) => {
 // 	}
 // }
 
-const App = props => {
-	let [items, setItems] = React.useState([
-		{ id: 1, name: 'Apple', price: 0.99 },
- 		{ id: 2, name: 'Orange', price: 0.89 },
-	])
-
+const AddForm = props => {
 	let nameRef = createRef();
 	let priceRef = createRef();
 
 	let add = () => {
-		let id = items.length + 1;
+		
 		let name = nameRef.current.value;
 		let price = priceRef.current.value;
 
-		setItems([
-			...items,
-			{id, name, price}
-		])
+		props.add(name, price);
 	}
 
 	return (
 		<div>
-			<ul>
-				{items.map(i => <Item name={i.name} price={i.price} key={i.id} />)}
-			</ul>
 			<input type="text" ref={nameRef} /><br />
 			<input type="text" ref={priceRef} /><br />
 			<button onClick={add}>Add</button>
-
 		</div>
 	)
 }
+
 
 // class App extends React.Component {
 // 	state = {
@@ -115,5 +104,32 @@ const App = props => {
 // 			</div>
 // 		);
 // 	}
-//  }
- export default App;
+// }
+
+const App = props => {
+	let [items, setItems] = React.useState([
+		{ id: 1, name: 'Apple', price: 0.99 },
+			{ id: 2, name: 'Orange', price: 0.89 },
+	])
+
+	
+
+	let add = (name, price) => {
+		let id = items.length + 1;
+
+		setItems([
+			...items,
+			{id, name, price}
+		])
+	}
+
+	return (
+		<div>
+			<ul>
+				{items.map(i => <Item name={i.name} price={i.price} key={i.id} />)}
+			</ul>
+			<AddForm add={add} />
+		</div>
+	)
+}
+export default App;
